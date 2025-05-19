@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean Breeze Fish Joint - Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .date-display {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            font-size: 0.9rem;
+        }
+
+        main {
+            flex: 1;
+            padding: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .input-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .input-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-card {
+            background-color: var(--light-color);
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .form-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .summary-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .summary-card {
+            background-color: var(--light-color);
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .summary-card h4 {
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-card p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .summary-card small {
+            color: #7f8c8d;
+            font-size: 0.8rem;
+        }
+
+        nav {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a.active {
+            background-color: var(--secondary-color);
+        }
+
+        nav a:hover:not(.active) {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        /* Records Page Styles */
+        .records-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .records-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-filter {
+            display: flex;
+            gap: 1rem;
+        }
+
+        #search-input, #date-filter, #date-search {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #records-table, #attendance-table, #fish-size-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        #records-table th, #records-table td, 
+        #attendance-table th, #attendance-table td,
+        #fish-size-table th, #fish-size-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #records-table th, #attendance-table th, #fish-size-table th {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+
+        #records-table tr:hover, #attendance-table tr:hover, #fish-size-table tr:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .records-actions, .attendance-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .analytics-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .analytics-card {
+            background-color: var(--light-color);
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        .analytics-card h4 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+            text-align: center;
+        }
+
+        /* Attendance styles */
+        .late {
+            color: var(--danger-color);
+            font-weight: bold;
+        }
+
+        .early {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .punctual {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        /* Salary calculation styles */
+        .salary-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        /* Page switching */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .records-header, .attendance-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .date-display {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-fish"></i>
+            <h1>Ocean Breeze Fish Joint</h1>
+        </div>
+        <div class="date-display">
+            <span id="current-date"></span>
+            <span id="current-time"></span>
+        </div>
+    </header>
+
+    <main>
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page active">
+            <section class="input-section">
+                <h2><i class="fas fa-pencil-alt"></i> Daily Operations</h2>
+                
+                <div class="form-grid">
+                    <!-- Fish Sales -->
+                    <div class="form-card">
+                        <h3>Fish Sales</h3>
+                        <div class="input-group">
+                            <label for="fish-type">Fish Type:</label>
+                            <select id="fish-type">
+                                <option value="tilapia">Tilapia</option>
+                                <option value="catfish">Catfish</option>
+                                <option value="salmon">Salmon</option>
+                                <option value="snapper">Snapper</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Fish Size Table with Quantity Input -->
+                        <div class="input-group">
+                            <label>Fish Size and Quantity:</label>
+                            <table id="fish-size-table">
+                                <thead>
+                                    <tr>
+                                        <th>Size (Ksh)</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>200</td>
+                                        <td><input type="number" id="size-200" min="0" class="fish-qty-input"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>250</td>
+                                        <td><input type="number" id="size-250" min="0" class="fish-qty-input"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>300</td>
+                                        <td><input type="number" id="size-300" min="0" class="fish-qty-input"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>350</td>
+                                        <td><input type="number" id="size-350" min="0" class="fish-qty-input"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>400</td>
+                                        <td><input type="number" id="size-400" min="0" class="fish-qty-input"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>450</td>
+                                        <td><input type="number" id="size-450" min="0" class="fish-qty-input"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>500</td>
+                                        <td><input type="number" id="size-500" min="0" class="fish-qty-input"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>550</td>
+                                        <td><input type="number" id="size-550" min="0" class="fish-qty-input"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>600</td>
+                                        <td><input type="number" id="size-600" min="0" class="fish-qty-input"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>650</td>
+                                        <td><input type="number" id="size-650" min="0" class="fish-qty-input"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>700</td>
+                                        <td><input type="number" id="size-700" min="0" class="fish-qty-input"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Wet Fries -->
+                    <div class="form-card">
+                        <h3>Wet Fries</h3>
+                        <div class="input-group">
+                            <label for="wet-fries-qty">Quantity Sold:</label>
+                            <input type="number" id="wet-fries-qty" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label for="wet-fries-price">Price (Ksh):</label>
+                            <input type="number" id="wet-fries-price" min="0" step="50">
+                        </div>
+                    </div>
+
+                    <!-- Takeaways -->
+                    <div class="form-card">
+                        <h3>Takeaways</h3>
+                        <div class="input-group">
+                            <label for="takeaway-qty">Quantity Sold:</label>
+                            <input type="number" id="takeaway-qty" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label for="takeaway-price">Price (Ksh):</label>
+                            <input type="number" id="takeaway-price" min="0" step="50">
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="form-card">
+                        <h3>Payment Method</h3>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="payment" value="cash" checked>
+                                <i class="fas fa-money-bill-wave"></i> Cash
+                            </label>
+                            <label>
+                                <input type="radio" name="payment" value="mpesa">
+                                <i class="fas fa-mobile-alt"></i> M-Pesa
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Amount Section -->
+                    <div class="form-card">
+                        <h3>Amount Section</h3>
+                        <div class="input-group">
+                            <label for="mpesa-sales">M-Pesa Sales:</label>
+                            <input type="number" id="mpesa-sales" min="0" step="50">
+                        </div>
+                        <div class="input-group">
+                            <label for="cash-sales">Cash Sales:</label>
+                            <input type="number" id="cash-sales" min="0" step="50">
+                        </div>
+                        <div class="input-group">
+                            <label>Total Sales:</label>
+                            <input type="text" id="total-sales" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Stock Management -->
+                    <div class="form-card stock-management">
+                        <h3>Stock Management</h3>
+                        <div class="input-group">
+                            <label for="initial-stock">Initial Stock (Pieces):</label>
+                            <input type="number" id="initial-stock" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label for="removed-today">Removed Today (Pieces):</label>
+                            <input type="number" id="removed-today" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label for="expenses">Daily Expenses (Ksh):</label>
+                            <input type="number" id="expenses" min="0" step="100">
+                        </div>
+                    </div>
+                </div>
+
+                <button id="save-btn" class="btn-primary">
+                    <i class="fas fa-save"></i> Save Daily Data
+                </button>
+            </section>
+
+            <section class="summary-section">
+                <h2><i class="fas fa-chart-pie"></i> Daily Summary</h2>
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <h4>Fish Remaining</h4>
+                        <p id="fish-remaining">0</p>
+                        <small>In Freezer</small>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Today's Sales</h4>
+                        <p id="today-sales">Ksh 0</p>
+                        <small>Total Revenue</small>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Today's Profit</h4>
+                        <p id="today-profit">Ksh 0</p>
+                        <small>After Expenses</small>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Payment Split</h4>
+                        <p id="cash-amount">Cash: Ksh 0</p>
+                        <p id="mpesa-amount">M-Pesa: Ksh 0</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Records Page -->
+        <div id="records-page" class="page">
+            <section class="records-section">
+                <div class="records-header">
+                    <h2><i class="fas fa-database"></i> Business Records</h2>
+                    <div class="search-filter">
+                        <input type="text" id="search-input" placeholder="Search records...">
+                        <input type="date" id="date-search" placeholder="Search by date">
+                    </div>
+                </div>
+
+                <table id="records-table">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Fish Type</th>
+                            <th>Size (Ksh)</th>
+                            <th>Pieces Sold</th>
+                            <th>Fish Revenue</th>
+                            <th>Wet Fries</th>
+                            <th>Takeaways</th>
+                            <th>Total Sales</th>
+                            <th>Payment Method</th>
+                            <th>Stock Remaining</th>
+                            <th>Expenses</th>
+                            <th>Profit</th>
+                        </tr>
+                    </thead>
+                    <tbody id="records-body">
+                        <!-- Records will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+
+                <div class="records-actions">
+                    <button id="export-csv" class="btn-secondary">
+                        <i class="fas fa-file-csv"></i> Export to CSV
+                    </button>
+                    <button id="clear-all" class="btn-danger">
+                        <i class="fas fa-trash"></i> Clear All Records
+                    </button>
+                </div>
+            </section>
+
+            <section class="analytics-section">
+                <h2><i class="fas fa-chart-line"></i> Business Analytics</h2>
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h4>Total Fish Sold</h4>
+                        <canvas id="fishChart"></canvas>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>Revenue Breakdown</h4>
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>Payment Methods</h4>
+                        <canvas id="paymentChart"></canvas>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>Monthly Profit</h4>
+                        <canvas id="profitChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Attendance Page -->
+        <div id="attendance-page" class="page">
+            <section class="input-section">
+                <h2><i class="fas fa-user-clock"></i> Staff Attendance</h2>
+                
+                <div class="form-grid">
+                    <div class="form-card">
+                        <h3>Record Attendance</h3>
+                        <div class="input-group">
+                            <label for="attendance-date">Date:</label>
+                            <input type="date" id="attendance-date">
+                        </div>
+                        <div class="input-group">
+                            <label for="staff-name">Staff Name:</label>
+                            <input type="text" id="staff-name" placeholder="Enter staff name">
+                        </div>
+                        <div class="input-group">
+                            <label for="arrival-time">Arrival Time:</label>
+                            <input type="time" id="arrival-time">
+                        </div>
+                        <button id="save-attendance" class="btn-primary">
+                            <i class="fas fa-user-check"></i> Record Attendance
+                        </button>
+                    </div>
+
+                    <div class="form-card">
+                        <h3>Salary Calculator</h3>
+                        <div class="input-group">
+                            <label for="salary-staff-name">Staff Name:</label>
+                            <select id="salary-staff-name">
+                                <!-- Options will be added by JavaScript -->
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="hourly-rate">Hourly Rate (Ksh):</label>
+                            <input type="number" id="hourly-rate" min="0" step="50" value="200">
+                        </div>
+                        <div class="input-group">
+                            <label for="salary-month">Month:</label>
+                            <select id="salary-month">
+                                <option value="0">January</option>
+                                <option value="1">February</option>
+                                <option value="2">March</option>
+                                <option value="3">April</option>
+                                <option value="4">May</option>
+                                <option value="5">June</option>
+                                <option value="6">July</option>
+                                <option value="7">August</option>
+                                <option value="8">September</option>
+                                <option value="9">October</option>
+                                <option value="10">November</option>
+                                <option value="11">December</option>
+                            </select>
+                        </div>
+                        <button id="calculate-salary" class="btn-primary">
+                            <i class="fas fa-calculator"></i> Calculate Salary
+                        </button>
+                        <div id="salary-result" class="salary-result" style="display: none;">
+                            <!-- Results will be shown here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="records-section">
+                <div class="records-header">
+                    <h2><i class="fas fa-clipboard-list"></i> Attendance Records</h2>
+                    <div class="search-filter">
+                        <input type="text" id="attendance-search" placeholder="Search staff...">
+                        <select id="attendance-month-filter">
+                            <option value="all">All Months</option>
+                            <option value="0">January</option>
+                            <option value="1">February</option>
+                            <option value="2">March</option>
+                            <option value="3">April</option>
+                            <option value="4">May</option>
+                            <option value="5">June</option>
+                            <option value="6">July</option>
+                            <option value="7">August</option>
+                            <option value="8">September</option>
+                            <option value="9">October</option>
+                            <option value="10">November</option>
+                            <option value="11">December</option>
+                        </select>
+                    </div>
+                </div>
+
+                <table id="attendance-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Staff Name</th>
+                            <th>Arrival Time</th>
+                            <th>Status</th>
+                            <th>Duration (minutes)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-body">
+                        <!-- Attendance records will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+
+                <div class="attendance-actions">
+                    <button id="export-attendance-csv" class="btn-secondary">
+                        <i class="fas fa-file-csv"></i> Export to CSV
+                    </button>
+                    <button id="clear-attendance" class="btn-danger">
+                        <i class="fas fa-trash"></i> Clear All Records
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <nav>
+        <a href="#" class="nav-link active" data-page="dashboard-page"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="#" class="nav-link" data-page="records-page"><i class="fas fa-database"></i> Records</a>
+        <a href="#" class="nav-link" data-page="attendance-page"><i class="fas fa-users"></i> Attendance</a>
+        <button id="print-btn" class="btn-secondary"><i class="fas fa-print"></i> Print Report</button>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Business Data Storage
+        let businessRecords = JSON.parse(localStorage.getItem('fishJointRecords')) || [];
+        let currentStock = JSON.parse(localStorage.getItem('currentStock')) || {
+            tilapia: 0,
+            catfish: 0,
+            salmon: 0,
+            snapper: 0
+        };
+        let attendanceRecords = JSON.parse(localStorage.getItem('attendanceRecords')) || [];
+        let staffList = JSON.parse(localStorage.getItem('staffList')) || [];
+
+        // DOM Elements
+        const currentDateEl = document.getElementById('current-date');
+        const currentTimeEl = document.getElementById('current-time');
+        const saveBtn = document.getElementById('save-btn');
+        const fishRemainingEl = document.getElementById('fish-remaining');
+        const todaySalesEl = document.getElementById('today-sales');
+        const todayProfitEl = document.getElementById('today-profit');
+        const cashAmountEl = document.getElementById('cash-amount');
+        const mpesaAmountEl = document.getElementById('mpesa-amount');
+        const recordsBody = document.getElementById('records-body');
+        const searchInput = document.getElementById('search-input');
+        const dateSearch = document.getElementById('date-search');
+        const exportCsvBtn = document.getElementById('export-csv');
+        const clearAllBtn = document.getElementById('clear-all');
+        const printBtn = document.getElementById('print-btn');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        // Attendance elements
+        const saveAttendanceBtn = document.getElementById('save-attendance');
+        const attendanceBody = document.getElementById('attendance-body');
+        const attendanceSearch = document.getElementById('attendance-search');
+        const attendanceMonthFilter = document.getElementById('attendance-month-filter');
+        const exportAttendanceCsvBtn = document.getElementById('export-attendance-csv');
+        const clearAttendanceBtn = document.getElementById('clear-attendance');
+        const salaryStaffName = document.getElementById('salary-staff-name');
+        const calculateSalaryBtn = document.getElementById('calculate-salary');
+        const salaryResult = document.getElementById('salary-result');
+        const attendanceDate = document.getElementById('attendance-date');
+
+        // Amount section elements
+        const mpesaSalesInput = document.getElementById('mpesa-sales');
+        const cashSalesInput = document.getElementById('cash-sales');
+        const totalSalesInput = document.getElementById('total-sales');
+
+        // Fish size quantity inputs
+        const fishQtyInputs = document.querySelectorAll('.fish-qty-input');
+
+        // Initialize Charts
+        let fishChart, revenueChart, paymentChart, profitChart;
+
+        // Initialize the application
+        function init() {
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            
+            loadDashboard();
+            loadRecords();
+            loadAttendanceRecords();
+            updateStaffDropdown();
+            
+            setupEventListeners();
+            
+            // Set default attendance date to today
+            const today = new Date();
+            const formattedToday = formatDateForInput(today);
+            attendanceDate.value = formattedToday;
+            
+            // Initialize amount section calculation
+            calculateTotalSales();
+        }
+
+        // Format date for input[type="date"]
+        function formatDateForInput(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Update current date and time
+        function updateDateTime() {
+            const now = new Date();
+            currentDateEl.textContent = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            currentTimeEl.textContent = now.toLocaleTimeString();
+        }
+
+        // Load dashboard data
+        function loadDashboard() {
+            // Calculate remaining fish
+            const remainingFish = currentStock.tilapia + currentStock.catfish + currentStock.salmon + currentStock.snapper;
+            fishRemainingEl.textContent = remainingFish;
+            
+            // Load today's summary if available
+            const today = new Date().toLocaleDateString();
+            const todayRecord = businessRecords.find(record => record.date === today);
+            
+            if (todayRecord) {
+                todaySalesEl.textContent = `Ksh ${todayRecord.totalSales.toLocaleString()}`;
+                todayProfitEl.textContent = `Ksh ${(todayRecord.totalSales - todayRecord.expenses).toLocaleString()}`;
+                cashAmountEl.textContent = `Cash: Ksh ${todayRecord.cashAmount.toLocaleString()}`;
+                mpesaAmountEl.textContent = `M-Pesa: Ksh ${todayRecord.mpesaAmount.toLocaleString()}`;
+            }
+        }
+
+        // Load records table
+        function loadRecords() {
+            recordsBody.innerHTML = '';
+            
+            businessRecords.forEach(record => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${record.date} ${record.time || ''}</td>
+                    <td>${record.fishType}</td>
+                    <td>${record.fishSize || 'N/A'}</td>
+                    <td>${record.piecesSold}</td>
+                    <td>Ksh ${record.fishRevenue.toLocaleString()}</td>
+                    <td>${record.wetFriesQty} (Ksh ${record.wetFriesRevenue.toLocaleString()})</td>
+                    <td>${record.takeawayQty} (Ksh ${record.takeawayRevenue.toLocaleString()})</td>
+                    <td>Ksh ${record.totalSales.toLocaleString()}</td>
+                    <td>${record.paymentMethod === 'cash' ? 'Cash' : 'M-Pesa'}</td>
+                    <td>${record.stockRemaining}</td>
+                    <td>Ksh ${record.expenses.toLocaleString()}</td>
+                    <td>Ksh ${(record.totalSales - record.expenses).toLocaleString()}</td>
+                `;
+                
+                recordsBody.appendChild(row);
+            });
+            
+            updateCharts();
+        }
+
+        // Load attendance records
+        function loadAttendanceRecords() {
+            attendanceBody.innerHTML = '';
+            
+            const filteredRecords = filterAttendanceRecords();
+            
+            filteredRecords.forEach(record => {
+                const row = document.createElement('tr');
+                const status = record.status === 'late' ? 
+                    `<span class="late">Late (${record.duration} mins)</span>` : 
+                    record.status === 'early' ? 
+                    `<span class="early">Early (${record.duration} mins)</span>` :
+                    `<span class="punctual">Punctual</span>`;
+                
+                row.innerHTML = `
+                    <td>${record.date}</td>
+                    <td>${record.staffName}</td>
+                    <td>${record.arrivalTime}</td>
+                    <td>${status}</td>
+                    <td>${record.duration}</td>
+                `;
+                
+                attendanceBody.appendChild(row);
+            });
+        }
+
+        // Filter attendance records based on search and month filter
+        function filterAttendanceRecords() {
+            const searchTerm = attendanceSearch.value.toLowerCase();
+            const monthFilter = attendanceMonthFilter.value;
+            
+            return attendanceRecords.filter(record => {
+                // Search filter
+                const matchesSearch = record.staffName.toLowerCase().includes(searchTerm);
+                
+                // Month filter
+                let matchesMonth = true;
+                if (monthFilter !== 'all') {
+                    const recordDate = new Date(record.date);
+                    matchesMonth = recordDate.getMonth().toString() === monthFilter;
+                }
+                
+                return matchesSearch && matchesMonth;
+            });
+        }
+
+        // Update staff dropdown for salary calculation
+        function updateStaffDropdown() {
+            salaryStaffName.innerHTML = '';
+            
+            const uniqueStaff = [...new Set(attendanceRecords.map(record => record.staffName))];
+            
+            if (uniqueStaff.length === 0) {
+                salaryStaffName.innerHTML = '<option value="">No staff recorded</option>';
+                return;
+            }
+            
+            uniqueStaff.forEach(staff => {
+                const option = document.createElement('option');
+                option.value = staff;
+                option.textContent = staff;
+                salaryStaffName.appendChild(option);
+            });
+        }
+
+        // Calculate total sales from Mpesa and Cash inputs
+        function calculateTotalSales() {
+            const mpesaSales = parseFloat(mpesaSalesInput.value) || 0;
+            const cashSales = parseFloat(cashSalesInput.value) || 0;
+            const total = mpesaSales + cashSales;
+            totalSalesInput.value = `Ksh ${total.toLocaleString()}`;
+        }
+
+        // Update charts with business data
+        function updateCharts() {
+            // Fish Sales Chart
+            const fishTypes = ['Tilapia', 'Catfish', 'Salmon', 'Snapper'];
+            const fishSalesData = fishTypes.map(type => {
+                return businessRecords.reduce((sum, record) => {
+                    return record.fishType.toLowerCase() === type.toLowerCase() ? sum + record.piecesSold : sum;
+                }, 0);
+            });
+            
+            if (fishChart) fishChart.destroy();
+            const fishCtx = document.getElementById('fishChart').getContext('2d');
+            fishChart = new Chart(fishCtx, {
+                type: 'bar',
+                data: {
+                    labels: fishTypes,
+                    datasets: [{
+                        label: 'Pieces Sold',
+                        data: fishSalesData,
+                        backgroundColor: [
+                            'rgba(52, 152, 219, 0.7)',
+                            'rgba(155, 89, 182, 0.7)',
+                            'rgba(231, 76, 60, 0.7)',
+                            'rgba(241, 196, 15, 0.7)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+            
+            // Revenue Breakdown Chart
+            const revenueSources = ['Fish', 'Wet Fries', 'Takeaways'];
+            const revenueData = [
+                businessRecords.reduce((sum, record) => sum + record.fishRevenue, 0),
+                businessRecords.reduce((sum, record) => sum + record.wetFriesRevenue, 0),
+                businessRecords.reduce((sum, record) => sum + record.takeawayRevenue, 0)
+            ];
+            
+            if (revenueChart) revenueChart.destroy();
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            revenueChart = new Chart(revenueCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: revenueSources,
+                    datasets: [{
+                        data: revenueData,
+                        backgroundColor: [
+                            'rgba(52, 152, 219, 0.7)',
+                            'rgba(46, 204, 113, 0.7)',
+                            'rgba(241, 196, 15, 0.7)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+            
+            // Payment Methods Chart
+            const paymentMethods = ['Cash', 'M-Pesa'];
+            const paymentData = [
+                businessRecords.reduce((sum, record) => record.paymentMethod === 'cash' ? sum + 1 : sum, 0),
+                businessRecords.reduce((sum, record) => record.paymentMethod === 'mpesa' ? sum + 1 : sum, 0)
+            ];
+            
+            if (paymentChart) paymentChart.destroy();
+            const paymentCtx = document.getElementById('paymentChart').getContext('2d');
+            paymentChart = new Chart(paymentCtx, {
+                type: 'pie',
+                data: {
+                    labels: paymentMethods,
+                    datasets: [{
+                        data: paymentData,
+                        backgroundColor: [
+                            'rgba(52, 152, 219, 0.7)',
+                            'rgba(46, 204, 113, 0.7)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+            
+            // Monthly Profit Chart (last 30 days)
+            const last30Days = [...Array(30)].map((_, i) => {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                return d.toLocaleDateString();
+            }).reverse();
+            
+            const profitData = last30Days.map(date => {
+                const record = businessRecords.find(r => r.date === date);
+                return record ? record.totalSales - record.expenses : 0;
+            });
+            
+            if (profitChart) profitChart.destroy();
+            const profitCtx = document.getElementById('profitChart').getContext('2d');
+            profitChart = new Chart(profitCtx, {
+                type: 'line',
+                data: {
+                    labels: last30Days.map(date => new Date(date).toLocaleDateString('en-US', {month: 'short', day: 'numeric'})),
+                    datasets: [{
+                        label: 'Daily Profit',
+                        data: profitData,
+                        borderColor: 'rgba(46, 204, 113, 0.7)',
+                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Save button
+            saveBtn.addEventListener('click', saveDailyData);
+            
+            // Navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = link.getAttribute('data-page');
+                    
+                    // Update active nav link
+                    navLinks.forEach(navLink => navLink.classList.remove('active'));
+                    link.classList.add('active');
+                    
+                    // Show selected page
+                    pages.forEach(page => page.classList.remove('active'));
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    // Reload data if needed
+                    if (pageId === 'records-page') {
+                        loadRecords();
+                    } else if (pageId === 'attendance-page') {
+                        loadAttendanceRecords();
+                    }
+                });
+            });
+            
+            // Search and filter
+            searchInput.addEventListener('input', filterRecords);
+            dateSearch.addEventListener('change', filterRecordsByDate);
+            attendanceSearch.addEventListener('input', loadAttendanceRecords);
+            attendanceMonthFilter.addEventListener('change', loadAttendanceRecords);
+            
+            // Export CSV
+            exportCsvBtn.addEventListener('click', exportToCsv);
+            exportAttendanceCsvBtn.addEventListener('click', exportAttendanceToCsv);
+            
+            // Clear all records
+            clearAllBtn.addEventListener('click', clearAllRecords);
+            clearAttendanceBtn.addEventListener('click', clearAllAttendanceRecords);
+            
+            // Print report
+            printBtn.addEventListener('click', printReport);
+            
+            // Attendance
+            saveAttendanceBtn.addEventListener('click', saveAttendanceRecord);
+            calculateSalaryBtn.addEventListener('click', calculateSalaryDeductions);
+            
+            // Amount section calculation
+            mpesaSalesInput.addEventListener('input', calculateTotalSales);
+            cashSalesInput.addEventListener('input', calculateTotalSales);
+        }
+
+        // Save daily data
+        function saveDailyData() {
+            const fishType = document.getElementById('fish-type').value;
+            
+            // Get fish size quantities
+            const fishSizes = [200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700];
+            const fishQuantities = fishSizes.map(size => {
+                const qty = parseInt(document.getElementById(`size-${size}`).value) || 0;
+                return { size, qty };
+            });
+            
+            // Calculate total pieces sold and revenue
+            let piecesSold = 0;
+            let fishRevenue = 0;
+            
+            fishQuantities.forEach(item => {
+                piecesSold += item.qty;
+                fishRevenue += item.qty * item.size;
+            });
+            
+            const wetFriesQty = parseInt(document.getElementById('wet-fries-qty').value) || 0;
+            const wetFriesPrice = parseInt(document.getElementById('wet-fries-price').value) || 0;
+            const takeawayQty = parseInt(document.getElementById('takeaway-qty').value) || 0;
+            const takeawayPrice = parseInt(document.getElementById('takeaway-price').value) || 0;
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            const initialStock = parseInt(document.getElementById('initial-stock').value) || 0;
+            const removedToday = parseInt(document.getElementById('removed-today').value) || 0;
+            const expenses = parseInt(document.getElementById('expenses').value) || 0;
+            const mpesaSales = parseFloat(document.getElementById('mpesa-sales').value) || 0;
+            const cashSales = parseFloat(document.getElementById('cash-sales').value) || 0;
+            
+            // Validate required fields
+            if (piecesSold === 0 && wetFriesQty === 0 && takeawayQty === 0) {
+                alert('Please enter at least some sales data (fish, wet fries, or takeaways)');
+                return;
+            }
+            
+            if (initialStock === 0 && removedToday > 0) {
+                alert('Initial stock cannot be zero if you removed fish today');
+                return;
+            }
+            
+            // Calculate values
+            const now = new Date();
+            const date = now.toLocaleDateString();
+            const time = now.toLocaleTimeString();
+            const wetFriesRevenue = wetFriesQty * wetFriesPrice;
+            const takeawayRevenue = takeawayQty * takeawayPrice;
+            const totalSales = fishRevenue + wetFriesRevenue + takeawayRevenue;
+            const stockRemaining = initialStock - removedToday;
+            
+            // Update current stock
+            currentStock[fishType] = stockRemaining;
+            localStorage.setItem('currentStock', JSON.stringify(currentStock));
+            
+            // Create record
+            const record = {
+                date,
+                time,
+                fishType,
+                fishSize: fishSizes.map(size => `${size} (${document.getElementById(`size-${size}`).value || 0})`).join(', '),
+                piecesSold,
+                fishRevenue,
+                wetFriesQty,
+                wetFriesRevenue,
+                takeawayQty,
+                takeawayRevenue,
+                totalSales,
+                paymentMethod,
+                cashAmount: paymentMethod === 'cash' ? totalSales : 0,
+                mpesaAmount: paymentMethod === 'mpesa' ? totalSales : 0,
+                initialStock,
+                removedToday,
+                stockRemaining,
+                expenses,
+                profit: totalSales - expenses,
+                mpesaSales,
+                cashSales
+            };
+            
+            // Check if record for today exists
+            const existingRecordIndex = businessRecords.findIndex(r => r.date === date && r.fishType === fishType);
+            
+            if (existingRecordIndex >= 0) {
+                businessRecords[existingRecordIndex] = record;
+            } else {
+                businessRecords.push(record);
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('fishJointRecords', JSON.stringify(businessRecords));
+            
+            // Update dashboard
+            loadDashboard();
+            
+            // Show success message
+            alert('Daily data saved successfully!');
+            
+            // Clear form inputs (except stock)
+            fishQuantities.forEach(item => {
+                document.getElementById(`size-${item.size}`).value = '';
+            });
+            document.getElementById('wet-fries-qty').value = '';
+            document.getElementById('wet-fries-price').value = '';
+            document.getElementById('takeaway-qty').value = '';
+            document.getElementById('takeaway-price').value = '';
+            document.getElementById('expenses').value = '';
+            document.getElementById('mpesa-sales').value = '';
+            document.getElementById('cash-sales').value = '';
+            totalSalesInput.value = '';
+        }
+
+        // Save attendance record
+        function saveAttendanceRecord() {
+            const staffName = document.getElementById('staff-name').value.trim();
+            const arrivalTime = document.getElementById('arrival-time').value;
+            const date = document.getElementById('attendance-date').value;
+            
+            if (!staffName) {
+                alert('Please enter staff name');
+                return;
+            }
+            
+            if (!arrivalTime) {
+                alert('Please enter arrival time');
+                return;
+            }
+            
+            // Calculate if late or early
+            const arrivalDateTime = new Date(`${date}T${arrivalTime}`);
+            
+            // Expected time is 9:30 AM
+            const expectedTime = new Date(`${date}T09:30:00`);
+            
+            let status, duration;
+            if (arrivalDateTime > expectedTime) {
+                status = 'late';
+                duration = Math.round((arrivalDateTime - expectedTime) / (1000 * 60)); // minutes late
+            } else if (arrivalDateTime < expectedTime) {
+                status = 'early';
+                duration = Math.round((expectedTime - arrivalDateTime) / (1000 * 60)); // minutes early
+            } else {
+                status = 'punctual';
+                duration = 0;
+            }
+            
+            // Format date for display
+            const formattedDate = new Date(date).toLocaleDateString();
+            
+            // Create record
+            const record = {
+                date: formattedDate,
+                staffName,
+                arrivalTime,
+                status,
+                duration
+            };
+            
+            attendanceRecords.push(record);
+            
+            // Save to localStorage
+            localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
+            
+            // Update staff list if new staff
+            if (!staffList.includes(staffName)) {
+                staffList.push(staffName);
+                localStorage.setItem('staffList', JSON.stringify(staffList));
+                updateStaffDropdown();
+            }
+            
+            // Reload attendance records
+            loadAttendanceRecords();
+            
+            // Show success message
+            alert(`Attendance recorded: ${staffName} was ${status} ${duration > 0 ? `by ${duration} minutes` : ''}`);
+            
+            // Clear form inputs
+            document.getElementById('staff-name').value = '';
+            document.getElementById('arrival-time').value = '';
+        }
+
+        // Calculate salary deductions
+        function calculateSalaryDeductions() {
+            const staffName = salaryStaffName.value;
+            const hourlyRate = parseFloat(document.getElementById('hourly-rate').value) || 0;
+            const month = parseInt(document.getElementById('salary-month').value);
+            
+            if (!staffName) {
+                alert('Please select a staff member');
+                return;
+            }
+            
+            // Filter records for selected staff and month
+            const monthlyRecords = attendanceRecords.filter(record => {
+                const recordDate = new Date(record.date);
+                return record.staffName === staffName && recordDate.getMonth() === month;
+            });
+            
+            if (monthlyRecords.length === 0) {
+                salaryResult.innerHTML = `<p>No attendance records found for ${staffName} in the selected month.</p>`;
+                salaryResult.style.display = 'block';
+                return;
+            }
+            
+            // Calculate total late minutes (negative) and early minutes (positive)
+            let totalMinutes = 0;
+            monthlyRecords.forEach(record => {
+                if (record.status === 'late') {
+                    totalMinutes -= record.duration;
+                } else if (record.status === 'early') {
+                    totalMinutes += record.duration;
+                }
+            });
+            
+            // Calculate salary deduction (only for lateness)
+            const lateMinutes = monthlyRecords
+                .filter(record => record.status === 'late')
+                .reduce((sum, record) => sum + record.duration, 0);
+            
+            const deductionAmount = (lateMinutes / 60) * hourlyRate;
+            
+            // Prepare result
+            let resultHTML = `
+                <h3>Salary Calculation for ${staffName}</h3>
+                <p><strong>Month:</strong> ${document.getElementById('salary-month').options[month].text}</p>
+                <p><strong>Total Records:</strong> ${monthlyRecords.length}</p>
+                <p><strong>Total Time Balance:</strong> ${totalMinutes >= 0 ? '+' : ''}${totalMinutes} minutes</p>
+                <p><strong>Total Late Time:</strong> ${lateMinutes} minutes</p>
+                <p><strong>Hourly Rate:</strong> Ksh ${hourlyRate.toLocaleString()}</p>
+                <p><strong>Salary Deduction:</strong> Ksh ${deductionAmount.toFixed(2)}</p>
+            `;
+            
+            if (totalMinutes > 0) {
+                resultHTML += `<p class="early"><i class="fas fa-thumbs-up"></i> ${staffName} has a positive time balance this month!</p>`;
+            } else if (totalMinutes < 0) {
+                resultHTML += `<p class="late"><i class="fas fa-thumbs-down"></i> ${staffName} has a negative time balance this month.</p>`;
+            } else {
+                resultHTML += `<p class="punctual"><i class="fas fa-check-circle"></i> ${staffName} was perfectly on time this month.</p>`;
+            }
+            
+            salaryResult.innerHTML = resultHTML;
+            salaryResult.style.display = 'block';
+        }
+
+        // Filter records by search term
+        function filterRecords() {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            const filteredRecords = businessRecords.filter(record => {
+                return record.date.toLowerCase().includes(searchTerm) ||
+                       record.fishType.toLowerCase().includes(searchTerm) ||
+                       record.paymentMethod.toLowerCase().includes(searchTerm);
+            });
+            
+            // Update table
+            recordsBody.innerHTML = '';
+            filteredRecords.forEach(record => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${record.date} ${record.time || ''}</td>
+                    <td>${record.fishType}</td>
+                    <td>${record.fishSize || 'N/A'}</td>
+                    <td>${record.piecesSold}</td>
+                    <td>Ksh ${record.fishRevenue.toLocaleString()}</td>
+                    <td>${record.wetFriesQty} (Ksh ${record.wetFriesRevenue.toLocaleString()})</td>
+                    <td>${record.takeawayQty} (Ksh ${record.takeawayRevenue.toLocaleString()})</td>
+                    <td>Ksh ${record.totalSales.toLocaleString()}</td>
+                    <td>${record.paymentMethod === 'cash' ? 'Cash' : 'M-Pesa'}</td>
+                    <td>${record.stockRemaining}</td>
+                    <td>Ksh ${record.expenses.toLocaleString()}</td>
+                    <td>Ksh ${(record.totalSales - record.expenses).toLocaleString()}</td>
+                `;
+                
+                recordsBody.appendChild(row);
+            });
+        }
+
+        // Filter records by specific date
+        function filterRecordsByDate() {
+            const searchDate = dateSearch.value;
+            if (!searchDate) {
+                loadRecords();
+                return;
+            }
+            
+            const formattedSearchDate = new Date(searchDate).toLocaleDateString();
+            
+            const filteredRecords = businessRecords.filter(record => {
+                return record.date === formattedSearchDate;
+            });
+            
+            // Update table
+            recordsBody.innerHTML = '';
+            filteredRecords.forEach(record => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${record.date} ${record.time || ''}</td>
+                    <td>${record.fishType}</td>
+                    <td>${record.fishSize || 'N/A'}</td>
+                    <td>${record.piecesSold}</td>
+                    <td>Ksh ${record.fishRevenue.toLocaleString()}</td>
+                    <td>${record.wetFriesQty} (Ksh ${record.wetFriesRevenue.toLocaleString()})</td>
+                    <td>${record.takeawayQty} (Ksh ${record.takeawayRevenue.toLocaleString()})</td>
+                    <td>Ksh ${record.totalSales.toLocaleString()}</td>
+                    <td>${record.paymentMethod === 'cash' ? 'Cash' : 'M-Pesa'}</td>
+                    <td>${record.stockRemaining}</td>
+                    <td>Ksh ${record.expenses.toLocaleString()}</td>
+                    <td>Ksh ${(record.totalSales - record.expenses).toLocaleString()}</td>
+                `;
+                
+                recordsBody.appendChild(row);
+            });
+        }
+
+        // Export business records to CSV
+        function exportToCsv() {
+            if (businessRecords.length === 0) {
+                alert('No records to export!');
+                return;
+            }
+            
+            // CSV header
+            let csv = 'Date,Time,Fish Type,Size (Ksh),Pieces Sold,Fish Revenue,Wet Fries Qty,Wet Fries Revenue,Takeaway Qty,Takeaway Revenue,Total Sales,Payment Method,Stock Remaining,Expenses,Profit,M-Pesa Sales,Cash Sales\n';
+            
+            // Add records
+            businessRecords.forEach(record => {
+                csv += `"${record.date}",` +
+                      `"${record.time || ''}",` +
+                      `"${record.fishType}",` +
+                      `"${record.fishSize || ''}",` +
+                      `${record.piecesSold},` +
+                      `${record.fishRevenue},` +
+                      `${record.wetFriesQty},` +
+                      `${record.wetFriesRevenue},` +
+                      `${record.takeawayQty},` +
+                      `${record.takeawayRevenue},` +
+                      `${record.totalSales},` +
+                      `"${record.paymentMethod === 'cash' ? 'Cash' : 'M-Pesa'}",` +
+                      `${record.stockRemaining},` +
+                      `${record.expenses},` +
+                      `${record.totalSales - record.expenses},` +
+                      `${record.mpesaSales || 0},` +
+                      `${record.cashSales || 0}\n`;
+            });
+            
+            // Create download link
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `fish_joint_records_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Export attendance records to CSV
+        function exportAttendanceToCsv() {
+            if (attendanceRecords.length === 0) {
+                alert('No attendance records to export!');
+                return;
+            }
+            
+            // CSV header
+            let csv = 'Date,Staff Name,Arrival Time,Status,Duration (minutes)\n';
+            
+            // Add records
+            attendanceRecords.forEach(record => {
+                csv += `"${record.date}",` +
+                      `"${record.staffName}",` +
+                      `"${record.arrivalTime}",` +
+                      `"${record.status}",` +
+                      `${record.duration}\n`;
+            });
+            
+            // Create download link
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `attendance_records_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Clear all business records
+        function clearAllRecords() {
+            if (confirm('Are you sure you want to delete ALL business records? This cannot be undone.')) {
+                businessRecords = [];
+                currentStock = {
+                    tilapia: 0,
+                    catfish: 0,
+                    salmon: 0,
+                    snapper: 0
+                };
+                
+                localStorage.setItem('fishJointRecords', JSON.stringify(businessRecords));
+                localStorage.setItem('currentStock', JSON.stringify(currentStock));
+                
+                loadDashboard();
+                loadRecords();
+                
+                alert('All business records have been cleared.');
+            }
+        }
+
+        // Clear all attendance records
+        function clearAllAttendanceRecords() {
+            if (confirm('Are you sure you want to delete ALL attendance records? This cannot be undone.')) {
+                attendanceRecords = [];
+                staffList = [];
+                localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
+                localStorage.setItem('staffList', JSON.stringify(staffList));
+                
+                loadAttendanceRecords();
+                updateStaffDropdown();
+                
+                alert('All attendance records have been cleared.');
+            }
+        }
+
+        // Print report
+        function printReport() {
+            const activePage = document.querySelector('.page.active').id;
+            
+            if (activePage === 'records-page') {
+                printBusinessReport();
+            } else if (activePage === 'attendance-page') {
+                printAttendanceReport();
+            } else {
+                alert('Please go to either Records or Attendance page to print a report.');
+            }
+        }
+
+        // Print business report
+        function printBusinessReport() {
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Ocean Breeze Fish Joint - Business Report</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 20px; }
+                            h1 { color: #2c3e50; text-align: center; }
+                            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                            th { background-color: #f2f2f2; }
+                            .summary { margin: 20px 0; padding: 15px; background-color: #f9f9f9; }
+                            .footer { margin-top: 30px; text-align: right; font-style: italic; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>Ocean Breeze Fish Joint - Business Report</h1>
+                        <p>Generated on: ${new Date().toLocaleString()}</p>
+                        
+                        <h2>Sales Summary</h2>
+                        <div class="summary">
+                            <p><strong>Total Records:</strong> ${businessRecords.length}</p>
+                            <p><strong>Total Fish Sold:</strong> ${businessRecords.reduce((sum, r) => sum + r.piecesSold, 0)} pieces</p>
+                            <p><strong>Total Revenue:</strong> Ksh ${businessRecords.reduce((sum, r) => sum + r.totalSales, 0).toLocaleString()}</p>
+                            <p><strong>Total Profit:</strong> Ksh ${businessRecords.reduce((sum, r) => sum + (r.totalSales - r.expenses), 0).toLocaleString()}</p>
+                            <p><strong>Total M-Pesa Sales:</strong> Ksh ${businessRecords.reduce((sum, r) => sum + (r.mpesaSales || 0), 0).toLocaleString()}</p>
+                            <p><strong>Total Cash Sales:</strong> Ksh ${businessRecords.reduce((sum, r) => sum + (r.cashSales || 0), 0).toLocaleString()}</p>
+                        </div>
+                        
+                        <h2>Detailed Records</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date & Time</th>
+                                    <th>Fish Type</th>
+                                    <th>Size (Ksh)</th>
+                                    <th>Pieces Sold</th>
+                                    <th>Fish Revenue</th>
+                                    <th>Wet Fries</th>
+                                    <th>Takeaways</th>
+                                    <th>Total Sales</th>
+                                    <th>Payment</th>
+                                    <th>Stock Left</th>
+                                    <th>Expenses</th>
+                                    <th>Profit</th>
+                                    <th>M-Pesa</th>
+                                    <th>Cash</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${businessRecords.map(record => `
+                                    <tr>
+                                        <td>${record.date} ${record.time || ''}</td>
+                                        <td>${record.fishType}</td>
+                                        <td>${record.fishSize || 'N/A'}</td>
+                                        <td>${record.piecesSold}</td>
+                                        <td>Ksh ${record.fishRevenue.toLocaleString()}</td>
+                                        <td>${record.wetFriesQty} (Ksh ${record.wetFriesRevenue.toLocaleString()})</td>
+                                        <td>${record.takeawayQty} (Ksh ${record.takeawayRevenue.toLocaleString()})</td>
+                                        <td>Ksh ${record.totalSales.toLocaleString()}</td>
+                                        <td>${record.paymentMethod === 'cash' ? 'Cash' : 'M-Pesa'}</td>
+                                        <td>${record.stockRemaining}</td>
+                                        <td>Ksh ${record.expenses.toLocaleString()}</td>
+                                        <td>Ksh ${(record.totalSales - record.expenses).toLocaleString()}</td>
+                                        <td>Ksh ${(record.mpesaSales || 0).toLocaleString()}</td>
+                                        <td>Ksh ${(record.cashSales || 0).toLocaleString()}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                        
+                        <div class="footer">
+                            <p>Ocean Breeze Fish Joint Management System</p>
+                        </div>
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => printWindow.print(), 1000);
+        }
+
+        // Print attendance report
+        function printAttendanceReport() {
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Ocean Breeze Fish Joint - Attendance Report</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 20px; }
+                            h1 { color: #2c3e50; text-align: center; }
+                            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                            th { background-color: #f2f2f2; }
+                            .summary { margin: 20px 0; padding: 15px; background-color: #f9f9f9; }
+                            .footer { margin-top: 30px; text-align: right; font-style: italic; }
+                            .late { color: #e74c3c; font-weight: bold; }
+                            .early { color: #27ae60; font-weight: bold; }
+                            .punctual { color: #3498db; font-weight: bold; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>Ocean Breeze Fish Joint - Attendance Report</h1>
+                        <p>Generated on: ${new Date().toLocaleString()}</p>
+                        
+                        <h2>Attendance Summary</h2>
+                        <div class="summary">
+                            <p><strong>Total Records:</strong> ${attendanceRecords.length}</p>
+                            <p><strong>Unique Staff:</strong> ${[...new Set(attendanceRecords.map(r => r.staffName))].length}</p>
+                        </div>
+                        
+                        <h2>Detailed Attendance</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Staff Name</th>
+                                    <th>Arrival Time</th>
+                                    <th>Status</th>
+                                    <th>Duration (minutes)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${attendanceRecords.map(record => `
+                                    <tr>
+                                        <td>${record.date}</td>
+                                        <td>${record.staffName}</td>
+                                        <td>${record.arrivalTime}</td>
+                                        <td class="${record.status}">${record.status.charAt(0).toUpperCase() + record.status.slice(1)} ${record.duration > 0 ? `(${record.duration} mins)` : ''}</td>
+                                        <td>${record.duration}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                        
+                        <div class="footer">
+                            <p>Ocean Breeze Fish Joint Management System</p>
+                        </div>
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => printWindow.print(), 1000);
+        }
+
+        // Initialize the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
