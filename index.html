@@ -112,7 +112,7 @@
             font-weight: 500;
         }
 
-        .input-group input, .input-group select {
+        .input-group input, .input-group select, .input-group textarea {
             width: 100%;
             padding: 0.5rem;
             border: 1px solid #ddd;
@@ -151,70 +151,6 @@
             background-color: #2980b9;
         }
 
-        .summary-section {
-            background-color: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .summary-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .summary-card {
-            background-color: var(--light-color);
-            padding: 1rem;
-            border-radius: 6px;
-            text-align: center;
-        }
-
-        .summary-card h4 {
-            color: var(--dark-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .summary-card p {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .summary-card small {
-            color: #7f8c8d;
-            font-size: 0.8rem;
-        }
-
-        nav {
-            background-color: var(--primary-color);
-            padding: 1rem;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        nav a.active {
-            background-color: var(--secondary-color);
-        }
-
-        nav a:hover:not(.active) {
-            background-color: rgba(255,255,255,0.1);
-        }
-
         .btn-secondary {
             background-color: #95a5a6;
             color: white;
@@ -251,6 +187,24 @@
             background-color: #c0392b;
         }
 
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-success:hover {
+            background-color: #219955;
+        }
+
         /* Records Page Styles */
         .records-section {
             background-color: white;
@@ -278,7 +232,7 @@
             border-radius: 4px;
         }
 
-        #records-table, #attendance-table, #fish-size-table {
+        #records-table, #attendance-table, #fish-size-table, #salary-table, #late-records-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 1.5rem;
@@ -286,22 +240,24 @@
 
         #records-table th, #records-table td, 
         #attendance-table th, #attendance-table td,
-        #fish-size-table th, #fish-size-table td {
+        #fish-size-table th, #fish-size-table td,
+        #salary-table th, #salary-table td,
+        #late-records-table th, #late-records-table td {
             padding: 0.75rem;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
 
-        #records-table th, #attendance-table th, #fish-size-table th {
+        #records-table th, #attendance-table th, #fish-size-table th, #salary-table th, #late-records-table th {
             background-color: var(--light-color);
             color: var(--dark-color);
         }
 
-        #records-table tr:hover, #attendance-table tr:hover, #fish-size-table tr:hover {
+        #records-table tr:hover, #attendance-table tr:hover, #fish-size-table tr:hover, #salary-table tr:hover, #late-records-table tr:hover {
             background-color: rgba(52, 152, 219, 0.1);
         }
 
-        .records-actions, .attendance-actions {
+        .records-actions, .attendance-actions, .salary-actions {
             display: flex;
             justify-content: flex-end;
             gap: 1rem;
@@ -358,6 +314,21 @@
             border-left: 4px solid var(--secondary-color);
         }
 
+        .deduction-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .deduction-item input {
+            flex: 1;
+        }
+
+        .deduction-item button {
+            flex-shrink: 0;
+        }
+
         /* Page switching */
         .page {
             display: none;
@@ -365,6 +336,56 @@
 
         .page.active {
             display: block;
+        }
+
+        /* Employee search results */
+        .employee-search-results {
+            margin-top: 1rem;
+        }
+
+        .employee-not-found {
+            color: var(--danger-color);
+            font-weight: bold;
+            padding: 1rem;
+            background-color: #f8d7da;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .employee-records {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Late records styles */
+        .late-deduction {
+            color: var(--danger-color);
+            font-weight: bold;
+        }
+
+        /* Search suggestions */
+        .search-suggestions {
+            position: absolute;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            width: calc(100% - 2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-suggestion {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .search-suggestion:hover {
+            background-color: #f5f5f5;
         }
 
         /* Responsive adjustments */
@@ -675,6 +696,62 @@
         <!-- Attendance Page -->
         <div id="attendance-page" class="page">
             <section class="input-section">
+                <h2><i class="fas fa-user-clock"></i> Staff Management</h2>
+                
+                <div class="form-grid">
+                    <!-- Employee Registration -->
+                    <div class="form-card">
+                        <h3>Employee Registration</h3>
+                        <div class="input-group">
+                            <label for="employee-name">Full Name:</label>
+                            <input type="text" id="employee-name" placeholder="Enter employee full name" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="employee-id">Employee ID:</label>
+                            <input type="text" id="employee-id" placeholder="Enter employee ID" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="employee-position">Position:</label>
+                            <input type="text" id="employee-position" placeholder="Enter position" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="daily-rate">Daily Rate (Ksh):</label>
+                            <input type="number" id="daily-rate" min="0" step="100" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="payment-day">Payment Day:</label>
+                            <select id="payment-day" required>
+                                <option value="1">1st of the month</option>
+                                <option value="15">15th of the month</option>
+                                <option value="28">28th of the month</option>
+                                <option value="last">Last day of month</option>
+                            </select>
+                        </div>
+                        <button id="register-employee" class="btn-primary">
+                            <i class="fas fa-user-plus"></i> Register Employee
+                        </button>
+                    </div>
+
+                    <!-- Employee Search -->
+                    <div class="form-card">
+                        <h3>Employee Search</h3>
+                        <div class="input-group">
+                            <label for="employee-search">Search Employee:</label>
+                            <input type="text" id="employee-search" placeholder="Enter name or ID">
+                            <div id="employee-search-suggestions" class="search-suggestions" style="display: none;"></div>
+                        </div>
+                        <button id="search-employee" class="btn-primary">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        
+                        <div id="employee-search-results" class="employee-search-results">
+                            <!-- Search results will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="input-section">
                 <h2><i class="fas fa-user-clock"></i> Staff Attendance</h2>
                 
                 <div class="form-grid">
@@ -686,7 +763,9 @@
                         </div>
                         <div class="input-group">
                             <label for="staff-name">Staff Name:</label>
-                            <input type="text" id="staff-name" placeholder="Enter staff name">
+                            <select id="staff-name" required>
+                                <!-- Options will be added by JavaScript -->
+                            </select>
                         </div>
                         <div class="input-group">
                             <label for="arrival-time">Arrival Time:</label>
@@ -701,17 +780,17 @@
                         <h3>Salary Calculator</h3>
                         <div class="input-group">
                             <label for="salary-staff-name">Staff Name:</label>
-                            <select id="salary-staff-name">
+                            <select id="salary-staff-name" required>
                                 <!-- Options will be added by JavaScript -->
                             </select>
                         </div>
                         <div class="input-group">
-                            <label for="hourly-rate">Hourly Rate (Ksh):</label>
-                            <input type="number" id="hourly-rate" min="0" step="50" value="200">
+                            <label for="working-days">Working Days in Month:</label>
+                            <input type="number" id="working-days" min="1" max="31" value="26" required>
                         </div>
                         <div class="input-group">
                             <label for="salary-month">Month:</label>
-                            <select id="salary-month">
+                            <select id="salary-month" required>
                                 <option value="0">January</option>
                                 <option value="1">February</option>
                                 <option value="2">March</option>
@@ -726,7 +805,22 @@
                                 <option value="11">December</option>
                             </select>
                         </div>
-                        <button id="calculate-salary" class="btn-primary">
+                        <div class="input-group">
+                            <label for="salary-date">Payment Date:</label>
+                            <input type="date" id="salary-date" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Deductions (Optional):</label>
+                            <div id="deductions-container">
+                                <!-- Deduction items will be added here -->
+                            </div>
+                            <button type="button" id="add-deduction" class="btn-secondary" style="margin-top: 10px;">
+                                <i class="fas fa-plus"></i> Add Deduction
+                            </button>
+                        </div>
+                        
+                        <button id="calculate-salary" class="btn-primary" disabled>
                             <i class="fas fa-calculator"></i> Calculate Salary
                         </button>
                         <div id="salary-result" class="salary-result" style="display: none;">
@@ -783,13 +877,112 @@
                     </button>
                 </div>
             </section>
+            
+            <section class="records-section">
+                <div class="records-header">
+                    <h2><i class="fas fa-money-bill-wave"></i> Salary Records</h2>
+                    <div class="search-filter">
+                        <input type="text" id="salary-search" placeholder="Search staff...">
+                        <select id="salary-month-filter">
+                            <option value="all">All Months</option>
+                            <option value="0">January</option>
+                            <option value="1">February</option>
+                            <option value="2">March</option>
+                            <option value="3">April</option>
+                            <option value="4">May</option>
+                            <option value="5">June</option>
+                            <option value="6">July</option>
+                            <option value="7">August</option>
+                            <option value="8">September</option>
+                            <option value="9">October</option>
+                            <option value="10">November</option>
+                            <option value="11">December</option>
+                        </select>
+                    </div>
+                </div>
+
+                <table id="salary-table">
+                    <thead>
+                        <tr>
+                            <th>Staff Name</th>
+                            <th>Month</th>
+                            <th>Basic Salary</th>
+                            <th>Deductions</th>
+                            <th>Net Salary</th>
+                            <th>Payment Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salary-body">
+                        <!-- Salary records will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+
+                <div class="salary-actions">
+                    <button id="export-salary-csv" class="btn-secondary">
+                        <i class="fas fa-file-csv"></i> Export to CSV
+                    </button>
+                    <button id="clear-salary" class="btn-danger">
+                        <i class="fas fa-trash"></i> Clear All Records
+                    </button>
+                </div>
+            </section>
+            
+            <!-- New Late Records Section -->
+            <section class="records-section">
+                <div class="records-header">
+                    <h2><i class="fas fa-clock"></i> Late Arrival Records</h2>
+                    <div class="search-filter">
+                        <input type="text" id="late-search" placeholder="Search staff...">
+                        <select id="late-month-filter">
+                            <option value="all">All Months</option>
+                            <option value="0">January</option>
+                            <option value="1">February</option>
+                            <option value="2">March</option>
+                            <option value="3">April</option>
+                            <option value="4">May</option>
+                            <option value="5">June</option>
+                            <option value="6">July</option>
+                            <option value="7">August</option>
+                            <option value="8">September</option>
+                            <option value="9">October</option>
+                            <option value="10">November</option>
+                            <option value="11">December</option>
+                        </select>
+                    </div>
+                </div>
+
+                <table id="late-records-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Staff Name</th>
+                            <th>Arrival Time</th>
+                            <th>Minutes Late</th>
+                            <th>Deduction (Ksh)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="late-records-body">
+                        <!-- Late records will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+
+                <div class="attendance-actions">
+                    <button id="export-late-csv" class="btn-secondary">
+                        <i class="fas fa-file-csv"></i> Export to CSV
+                    </button>
+                    <button id="clear-late" class="btn-danger">
+                        <i class="fas fa-trash"></i> Clear All Records
+                    </button>
+                </div>
+            </section>
         </div>
     </main>
 
     <nav>
         <a href="#" class="nav-link active" data-page="dashboard-page"><i class="fas fa-home"></i> Dashboard</a>
         <a href="#" class="nav-link" data-page="records-page"><i class="fas fa-database"></i> Records</a>
-        <a href="#" class="nav-link" data-page="attendance-page"><i class="fas fa-users"></i> Attendance</a>
+        <a href="#" class="nav-link" data-page="attendance-page"><i class="fas fa-users"></i> Staff</a>
         <button id="print-btn" class="btn-secondary"><i class="fas fa-print"></i> Print Report</button>
     </nav>
 
@@ -804,7 +997,10 @@
             snapper: 0
         };
         let attendanceRecords = JSON.parse(localStorage.getItem('attendanceRecords')) || [];
-        let staffList = JSON.parse(localStorage.getItem('staffList')) || [];
+        let salaryRecords = JSON.parse(localStorage.getItem('salaryRecords')) || [];
+        let lateRecords = JSON.parse(localStorage.getItem('lateRecords')) || [];
+        let employees = JSON.parse(localStorage.getItem('employees')) || [];
+        let deductionCounter = 0;
 
         // DOM Elements
         const currentDateEl = document.getElementById('current-date');
@@ -824,6 +1020,18 @@
         const navLinks = document.querySelectorAll('.nav-link');
         const pages = document.querySelectorAll('.page');
 
+        // Staff management elements
+        const employeeNameInput = document.getElementById('employee-name');
+        const employeeIdInput = document.getElementById('employee-id');
+        const employeePositionInput = document.getElementById('employee-position');
+        const dailyRateInput = document.getElementById('daily-rate');
+        const paymentDaySelect = document.getElementById('payment-day');
+        const registerEmployeeBtn = document.getElementById('register-employee');
+        const employeeSearchInput = document.getElementById('employee-search');
+        const searchEmployeeBtn = document.getElementById('search-employee');
+        const employeeSearchResults = document.getElementById('employee-search-results');
+        const employeeSearchSuggestions = document.getElementById('employee-search-suggestions');
+
         // Attendance elements
         const saveAttendanceBtn = document.getElementById('save-attendance');
         const attendanceBody = document.getElementById('attendance-body');
@@ -835,6 +1043,24 @@
         const calculateSalaryBtn = document.getElementById('calculate-salary');
         const salaryResult = document.getElementById('salary-result');
         const attendanceDate = document.getElementById('attendance-date');
+        const staffNameSelect = document.getElementById('staff-name');
+        const addDeductionBtn = document.getElementById('add-deduction');
+        const deductionsContainer = document.getElementById('deductions-container');
+        const salaryDateInput = document.getElementById('salary-date');
+        const workingDaysInput = document.getElementById('working-days');
+        const salaryMonthSelect = document.getElementById('salary-month');
+        const salaryBody = document.getElementById('salary-body');
+        const salarySearch = document.getElementById('salary-search');
+        const salaryMonthFilter = document.getElementById('salary-month-filter');
+        const exportSalaryCsvBtn = document.getElementById('export-salary-csv');
+        const clearSalaryBtn = document.getElementById('clear-salary');
+
+        // Late records elements
+        const lateRecordsBody = document.getElementById('late-records-body');
+        const lateSearch = document.getElementById('late-search');
+        const lateMonthFilter = document.getElementById('late-month-filter');
+        const exportLateCsvBtn = document.getElementById('export-late-csv');
+        const clearLateBtn = document.getElementById('clear-late');
 
         // Amount section elements
         const mpesaSalesInput = document.getElementById('mpesa-sales');
@@ -855,7 +1081,9 @@
             loadDashboard();
             loadRecords();
             loadAttendanceRecords();
-            updateStaffDropdown();
+            loadSalaryRecords();
+            loadLateRecords();
+            updateStaffDropdowns();
             
             setupEventListeners();
             
@@ -863,9 +1091,16 @@
             const today = new Date();
             const formattedToday = formatDateForInput(today);
             attendanceDate.value = formattedToday;
+            salaryDateInput.value = formattedToday;
             
             // Initialize amount section calculation
             calculateTotalSales();
+            
+            // Add one empty deduction field by default
+            addDeductionField();
+            
+            // Check if salary calculation should be enabled
+            checkSalaryCalculationEnabled();
         }
 
         // Format date for input[type="date"]
@@ -959,6 +1194,59 @@
                 attendanceBody.appendChild(row);
             });
         }
+        
+        // Load salary records
+        function loadSalaryRecords() {
+            salaryBody.innerHTML = '';
+            
+            const filteredRecords = filterSalaryRecords();
+            
+            filteredRecords.forEach(record => {
+                const row = document.createElement('tr');
+                const status = new Date(record.paymentDate) <= new Date() ? 
+                    `<span class="success">Paid on ${record.paymentDate}</span>` : 
+                    `<span class="warning">Pending (due ${record.paymentDate})</span>`;
+                
+                row.innerHTML = `
+                    <td>${record.staffName}</td>
+                    <td>${record.month}</td>
+                    <td>Ksh ${record.basicSalary.toLocaleString()}</td>
+                    <td>Ksh ${record.totalDeductions.toLocaleString()}</td>
+                    <td>Ksh ${record.netSalary.toLocaleString()}</td>
+                    <td>${record.paymentDate}</td>
+                    <td>${status}</td>
+                `;
+                
+                salaryBody.appendChild(row);
+            });
+        }
+        
+        // Load late records
+        function loadLateRecords() {
+            lateRecordsBody.innerHTML = '';
+            
+            const filteredRecords = filterLateRecords();
+            
+            filteredRecords.forEach(record => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${record.date}</td>
+                    <td>${record.staffName}</td>
+                    <td>${record.arrivalTime}</td>
+                    <td>${record.duration}</td>
+                    <td class="late-deduction">${calculateLateDeduction(record.duration)}</td>
+                `;
+                
+                lateRecordsBody.appendChild(row);
+            });
+        }
+        
+        // Calculate late deduction (50 Ksh per 15 minutes late)
+        function calculateLateDeduction(minutesLate) {
+            const deduction = Math.floor(minutesLate / 15) * 50;
+            return `Ksh ${deduction.toLocaleString()}`;
+        }
 
         // Filter attendance records based on search and month filter
         function filterAttendanceRecords() {
@@ -979,24 +1267,245 @@
                 return matchesSearch && matchesMonth;
             });
         }
+        
+        // Filter salary records based on search and month filter
+        function filterSalaryRecords() {
+            const searchTerm = salarySearch.value.toLowerCase();
+            const monthFilter = salaryMonthFilter.value;
+            
+            return salaryRecords.filter(record => {
+                // Search filter
+                const matchesSearch = record.staffName.toLowerCase().includes(searchTerm);
+                
+                // Month filter
+                let matchesMonth = true;
+                if (monthFilter !== 'all') {
+                    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    matchesMonth = monthNames[parseInt(monthFilter)] === record.month;
+                }
+                
+                return matchesSearch && matchesMonth;
+            });
+        }
+        
+        // Filter late records based on search and month filter
+        function filterLateRecords() {
+            const searchTerm = lateSearch.value.toLowerCase();
+            const monthFilter = lateMonthFilter.value;
+            
+            return lateRecords.filter(record => {
+                // Search filter
+                const matchesSearch = record.staffName.toLowerCase().includes(searchTerm);
+                
+                // Month filter
+                let matchesMonth = true;
+                if (monthFilter !== 'all') {
+                    const recordDate = new Date(record.date);
+                    matchesMonth = recordDate.getMonth().toString() === monthFilter;
+                }
+                
+                return matchesSearch && matchesMonth;
+            });
+        }
 
-        // Update staff dropdown for salary calculation
-        function updateStaffDropdown() {
+        // Update staff dropdowns for attendance and salary calculation
+        function updateStaffDropdowns() {
+            staffNameSelect.innerHTML = '';
             salaryStaffName.innerHTML = '';
             
-            const uniqueStaff = [...new Set(attendanceRecords.map(record => record.staffName))];
-            
-            if (uniqueStaff.length === 0) {
-                salaryStaffName.innerHTML = '<option value="">No staff recorded</option>';
+            if (employees.length === 0) {
+                staffNameSelect.innerHTML = '<option value="">No employees registered</option>';
+                salaryStaffName.innerHTML = '<option value="">No employees registered</option>';
                 return;
             }
             
-            uniqueStaff.forEach(staff => {
-                const option = document.createElement('option');
-                option.value = staff;
-                option.textContent = staff;
-                salaryStaffName.appendChild(option);
+            employees.forEach(employee => {
+                const option1 = document.createElement('option');
+                option1.value = employee.name;
+                option1.textContent = employee.name;
+                staffNameSelect.appendChild(option1);
+                
+                const option2 = document.createElement('option');
+                option2.value = employee.name;
+                option2.textContent = employee.name;
+                salaryStaffName.appendChild(option2);
             });
+        }
+
+        // Register a new employee
+        function registerEmployee() {
+            const name = employeeNameInput.value.trim();
+            const id = employeeIdInput.value.trim();
+            const position = employeePositionInput.value.trim();
+            const dailyRate = parseFloat(dailyRateInput.value) || 0;
+            const paymentDay = paymentDaySelect.value;
+            
+            if (!name || !id || !position || dailyRate <= 0) {
+                alert('Please fill all fields with valid values');
+                return;
+            }
+            
+            // Check if employee ID already exists
+            if (employees.some(emp => emp.id === id)) {
+                alert('Employee with this ID already exists');
+                return;
+            }
+            
+            // Create employee record
+            const employee = {
+                id,
+                name,
+                position,
+                dailyRate,
+                paymentDay,
+                registrationDate: new Date().toLocaleDateString()
+            };
+            
+            employees.push(employee);
+            localStorage.setItem('employees', JSON.stringify(employees));
+            
+            // Update dropdowns
+            updateStaffDropdowns();
+            
+            // Clear form
+            employeeNameInput.value = '';
+            employeeIdInput.value = '';
+            employeePositionInput.value = '';
+            dailyRateInput.value = '';
+            paymentDaySelect.value = '1';
+            
+            alert(`Employee ${name} registered successfully!`);
+        }
+
+        // Search for an employee
+        function searchEmployee() {
+            const searchTerm = employeeSearchInput.value.trim().toLowerCase();
+            
+            if (!searchTerm) {
+                alert('Please enter a name or ID to search');
+                return;
+            }
+            
+            const results = employees.filter(emp => 
+                emp.name.toLowerCase().includes(searchTerm) || 
+                emp.id.toLowerCase().includes(searchTerm)
+            );
+            
+            displaySearchResults(results);
+        }
+        
+        // Show search suggestions as user types
+        function showSearchSuggestions() {
+            const searchTerm = employeeSearchInput.value.trim().toLowerCase();
+            
+            if (searchTerm.length < 1) {
+                employeeSearchSuggestions.style.display = 'none';
+                return;
+            }
+            
+            const suggestions = employees.filter(emp => 
+                emp.name.toLowerCase().includes(searchTerm) || 
+                emp.id.toLowerCase().includes(searchTerm)
+            ).slice(0, 5); // Limit to 5 suggestions
+            
+            if (suggestions.length === 0) {
+                employeeSearchSuggestions.style.display = 'none';
+                return;
+            }
+            
+            employeeSearchSuggestions.innerHTML = '';
+            suggestions.forEach(emp => {
+                const suggestion = document.createElement('div');
+                suggestion.className = 'search-suggestion';
+                suggestion.textContent = `${emp.name} (${emp.id})`;
+                suggestion.addEventListener('click', () => {
+                    employeeSearchInput.value = emp.name;
+                    employeeSearchSuggestions.style.display = 'none';
+                    searchEmployee();
+                });
+                employeeSearchSuggestions.appendChild(suggestion);
+            });
+            
+            employeeSearchSuggestions.style.display = 'block';
+        }
+
+        // Display employee search results
+        function displaySearchResults(results) {
+            employeeSearchResults.innerHTML = '';
+            
+            if (results.length === 0) {
+                employeeSearchResults.innerHTML = `
+                    <div class="employee-not-found">
+                        <i class="fas fa-exclamation-circle"></i> Employee not registered or no records found
+                    </div>
+                `;
+                return;
+            }
+            
+            const employeeRecords = document.createElement('div');
+            employeeRecords.className = 'employee-records';
+            
+            results.forEach(emp => {
+                // Find attendance records for this employee
+                const empAttendance = attendanceRecords.filter(rec => rec.staffName === emp.name);
+                const empLateRecords = lateRecords.filter(rec => rec.staffName === emp.name);
+                const empSalary = salaryRecords.filter(rec => rec.staffName === emp.name);
+                
+                const empCard = document.createElement('div');
+                empCard.className = 'employee-card';
+                empCard.innerHTML = `
+                    <h3>${emp.name} (${emp.id})</h3>
+                    <p><strong>Position:</strong> ${emp.position}</p>
+                    <p><strong>Daily Rate:</strong> Ksh ${emp.dailyRate.toLocaleString()}</p>
+                    <p><strong>Payment Day:</strong> ${getPaymentDayDescription(emp.paymentDay)}</p>
+                    <p><strong>Registered on:</strong> ${emp.registrationDate}</p>
+                    
+                    <h4>Attendance Records (${empAttendance.length})</h4>
+                    ${empAttendance.length > 0 ? 
+                        `<ul>
+                            ${empAttendance.slice(0, 3).map(rec => 
+                                `<li>${rec.date} - ${rec.arrivalTime} (${rec.status})</li>`
+                            ).join('')}
+                            ${empAttendance.length > 3 ? `<li>...and ${empAttendance.length - 3} more</li>` : ''}
+                        </ul>` : 
+                        '<p>No attendance records found</p>'}
+                    
+                    <h4>Late Arrival Records (${empLateRecords.length})</h4>
+                    ${empLateRecords.length > 0 ? 
+                        `<ul>
+                            ${empLateRecords.slice(0, 3).map(rec => 
+                                `<li>${rec.date} - ${rec.arrivalTime} (${rec.duration} mins late)</li>`
+                            ).join('')}
+                            ${empLateRecords.length > 3 ? `<li>...and ${empLateRecords.length - 3} more</li>` : ''}
+                        </ul>` : 
+                        '<p>No late arrival records found</p>'}
+                    
+                    <h4>Salary Records (${empSalary.length})</h4>
+                    ${empSalary.length > 0 ? 
+                        `<ul>
+                            ${empSalary.slice(0, 3).map(rec => 
+                                `<li>${rec.month} - Ksh ${rec.netSalary.toLocaleString()} (${rec.paymentDate})</li>`
+                            ).join('')}
+                            ${empSalary.length > 3 ? `<li>...and ${empSalary.length - 3} more</li>` : ''}
+                        </ul>` : 
+                        '<p>No salary records found</p>'}
+                `;
+                
+                employeeRecords.appendChild(empCard);
+            });
+            
+            employeeSearchResults.appendChild(employeeRecords);
+        }
+
+        // Get payment day description
+        function getPaymentDayDescription(paymentDay) {
+            switch(paymentDay) {
+                case '1': return '1st of the month';
+                case '15': return '15th of the month';
+                case '28': return '28th of the month';
+                case 'last': return 'Last day of month';
+                default: return paymentDay;
+            }
         }
 
         // Calculate total sales from Mpesa and Cash inputs
@@ -1005,6 +1514,69 @@
             const cashSales = parseFloat(cashSalesInput.value) || 0;
             const total = mpesaSales + cashSales;
             totalSalesInput.value = `Ksh ${total.toLocaleString()}`;
+        }
+        
+        // Add a new deduction field
+        function addDeductionField(deduction = { description: '', amount: '' }) {
+            const deductionId = `deduction-${deductionCounter++}`;
+            
+            const deductionItem = document.createElement('div');
+            deductionItem.className = 'deduction-item';
+            deductionItem.innerHTML = `
+                <input type="text" class="deduction-description" placeholder="Description" value="${deduction.description || ''}">
+                <input type="number" class="deduction-amount" placeholder="Amount (Ksh)" min="0" value="${deduction.amount || ''}">
+                <button type="button" class="btn-danger remove-deduction" data-id="${deductionId}">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+            deductionItem.id = deductionId;
+            
+            deductionsContainer.appendChild(deductionItem);
+            
+            // Add event listener to the remove button
+            deductionItem.querySelector('.remove-deduction').addEventListener('click', () => {
+                deductionsContainer.removeChild(deductionItem);
+            });
+        }
+        
+        // Get all current deductions
+        function getCurrentDeductions() {
+            const deductions = [];
+            const deductionItems = deductionsContainer.querySelectorAll('.deduction-item');
+            
+            deductionItems.forEach(item => {
+                const description = item.querySelector('.deduction-description').value.trim();
+                const amount = parseFloat(item.querySelector('.deduction-amount').value) || 0;
+                
+                if (description || amount > 0) {
+                    deductions.push({
+                        description,
+                        amount
+                    });
+                }
+            });
+            
+            return deductions;
+        }
+
+        // Check if salary calculation should be enabled based on payment date
+        function checkSalaryCalculationEnabled() {
+            const paymentDate = new Date(salaryDateInput.value);
+            const today = new Date();
+            
+            // Clear time parts for accurate comparison
+            today.setHours(0, 0, 0, 0);
+            paymentDate.setHours(0, 0, 0, 0);
+            
+            // Enable if payment date is today or in the past
+            calculateSalaryBtn.disabled = paymentDate > today;
+            
+            // If disabled, show tooltip explaining why
+            if (calculateSalaryBtn.disabled) {
+                calculateSalaryBtn.title = "Salary calculation is only available on or after the payment date";
+            } else {
+                calculateSalaryBtn.title = "";
+            }
         }
 
         // Update charts with business data
@@ -1165,6 +1737,8 @@
                         loadRecords();
                     } else if (pageId === 'attendance-page') {
                         loadAttendanceRecords();
+                        loadSalaryRecords();
+                        loadLateRecords();
                     }
                 });
             });
@@ -1174,25 +1748,49 @@
             dateSearch.addEventListener('change', filterRecordsByDate);
             attendanceSearch.addEventListener('input', loadAttendanceRecords);
             attendanceMonthFilter.addEventListener('change', loadAttendanceRecords);
+            salarySearch.addEventListener('input', loadSalaryRecords);
+            salaryMonthFilter.addEventListener('change', loadSalaryRecords);
+            lateSearch.addEventListener('input', loadLateRecords);
+            lateMonthFilter.addEventListener('change', loadLateRecords);
             
             // Export CSV
             exportCsvBtn.addEventListener('click', exportToCsv);
             exportAttendanceCsvBtn.addEventListener('click', exportAttendanceToCsv);
+            exportSalaryCsvBtn.addEventListener('click', exportSalaryToCsv);
+            exportLateCsvBtn.addEventListener('click', exportLateToCsv);
             
             // Clear all records
             clearAllBtn.addEventListener('click', clearAllRecords);
             clearAttendanceBtn.addEventListener('click', clearAllAttendanceRecords);
+            clearSalaryBtn.addEventListener('click', clearAllSalaryRecords);
+            clearLateBtn.addEventListener('click', clearAllLateRecords);
             
             // Print report
             printBtn.addEventListener('click', printReport);
             
+            // Employee management
+            registerEmployeeBtn.addEventListener('click', registerEmployee);
+            searchEmployeeBtn.addEventListener('click', searchEmployee);
+            employeeSearchInput.addEventListener('input', showSearchSuggestions);
+            
+            // Hide suggestions when clicking elsewhere
+            document.addEventListener('click', (e) => {
+                if (e.target !== employeeSearchInput) {
+                    employeeSearchSuggestions.style.display = 'none';
+                }
+            });
+            
             // Attendance
             saveAttendanceBtn.addEventListener('click', saveAttendanceRecord);
             calculateSalaryBtn.addEventListener('click', calculateSalaryDeductions);
+            addDeductionBtn.addEventListener('click', () => addDeductionField());
             
             // Amount section calculation
             mpesaSalesInput.addEventListener('input', calculateTotalSales);
             cashSalesInput.addEventListener('input', calculateTotalSales);
+            
+            // Check if salary calculation should be enabled when date changes
+            salaryDateInput.addEventListener('change', checkSalaryCalculationEnabled);
         }
 
         // Save daily data
@@ -1309,12 +1907,12 @@
 
         // Save attendance record
         function saveAttendanceRecord() {
-            const staffName = document.getElementById('staff-name').value.trim();
+            const staffName = document.getElementById('staff-name').value;
             const arrivalTime = document.getElementById('arrival-time').value;
             const date = document.getElementById('attendance-date').value;
             
             if (!staffName) {
-                alert('Please enter staff name');
+                alert('Please select staff name');
                 return;
             }
             
@@ -1355,88 +1953,184 @@
             
             attendanceRecords.push(record);
             
+            // If late, add to late records
+            if (status === 'late') {
+                lateRecords.push({
+                    ...record,
+                    deduction: calculateLateDeduction(duration)
+                });
+                localStorage.setItem('lateRecords', JSON.stringify(lateRecords));
+            }
+            
             // Save to localStorage
             localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
             
-            // Update staff list if new staff
-            if (!staffList.includes(staffName)) {
-                staffList.push(staffName);
-                localStorage.setItem('staffList', JSON.stringify(staffList));
-                updateStaffDropdown();
-            }
-            
             // Reload attendance records
             loadAttendanceRecords();
+            loadLateRecords();
             
             // Show success message
             alert(`Attendance recorded: ${staffName} was ${status} ${duration > 0 ? `by ${duration} minutes` : ''}`);
             
             // Clear form inputs
-            document.getElementById('staff-name').value = '';
             document.getElementById('arrival-time').value = '';
         }
 
         // Calculate salary deductions
         function calculateSalaryDeductions() {
             const staffName = salaryStaffName.value;
-            const hourlyRate = parseFloat(document.getElementById('hourly-rate').value) || 0;
-            const month = parseInt(document.getElementById('salary-month').value);
+            const workingDays = parseFloat(workingDaysInput.value) || 0;
+            const month = parseInt(salaryMonthSelect.value);
+            const paymentDate = salaryDateInput.value;
+            const deductions = getCurrentDeductions();
             
             if (!staffName) {
                 alert('Please select a staff member');
                 return;
             }
             
-            // Filter records for selected staff and month
-            const monthlyRecords = attendanceRecords.filter(record => {
-                const recordDate = new Date(record.date);
-                return record.staffName === staffName && recordDate.getMonth() === month;
-            });
-            
-            if (monthlyRecords.length === 0) {
-                salaryResult.innerHTML = `<p>No attendance records found for ${staffName} in the selected month.</p>`;
-                salaryResult.style.display = 'block';
+            if (!paymentDate) {
+                alert('Please enter the payment date');
                 return;
             }
             
-            // Calculate total late minutes (negative) and early minutes (positive)
-            let totalMinutes = 0;
-            monthlyRecords.forEach(record => {
-                if (record.status === 'late') {
-                    totalMinutes -= record.duration;
-                } else if (record.status === 'early') {
-                    totalMinutes += record.duration;
+            // Check if it's too early to calculate salary
+            const today = new Date();
+            const paymentDateObj = new Date(paymentDate);
+            
+            // Check if payment date is in the future (shouldn't happen as button is disabled)
+            if (paymentDateObj > today) {
+                const proceed = confirm(`Warning: The payment date (${paymentDate}) is in the future. 
+                Normally, salary calculation should only be done when working days are over. 
+                If this is an emergency, you can proceed by adjusting the working days. 
+                Do you want to proceed?`);
+                
+                if (!proceed) {
+                    return;
                 }
+            }
+            
+            // Find employee to get daily rate
+            const employee = employees.find(emp => emp.name === staffName);
+            if (!employee) {
+                alert('Employee not found in records');
+                return;
+            }
+            
+            const dailyRate = employee.dailyRate;
+            
+            // Calculate basic salary
+            const basicSalary = dailyRate * workingDays;
+            
+            // Get late arrival deductions for this staff member
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const monthName = monthNames[month];
+            
+            // Find late records for this staff member in the selected month
+            const lateDeductions = lateRecords.filter(record => {
+                const recordDate = new Date(record.date);
+                return record.staffName === staffName && 
+                       recordDate.getMonth() === month &&
+                       record.status === 'late';
             });
             
-            // Calculate salary deduction (only for lateness)
-            const lateMinutes = monthlyRecords
-                .filter(record => record.status === 'late')
-                .reduce((sum, record) => sum + record.duration, 0);
+            // Calculate total late deductions (50 Ksh per 15 minutes late)
+            const totalLateDeduction = lateDeductions.reduce((sum, record) => {
+                return sum + Math.floor(record.duration / 15) * 50;
+            }, 0);
             
-            const deductionAmount = (lateMinutes / 60) * hourlyRate;
+            // Add late deduction to other deductions
+            if (totalLateDeduction > 0) {
+                deductions.push({
+                    description: `Late arrivals (${lateDeductions.length} times)`,
+                    amount: totalLateDeduction
+                });
+            }
+            
+            // Calculate total deductions
+            const totalDeductions = deductions.reduce((sum, deduction) => sum + deduction.amount, 0);
+            
+            // Calculate net salary
+            const netSalary = basicSalary - totalDeductions;
+            
+            // Format payment date
+            const formattedPaymentDate = new Date(paymentDate).toLocaleDateString();
             
             // Prepare result
             let resultHTML = `
                 <h3>Salary Calculation for ${staffName}</h3>
-                <p><strong>Month:</strong> ${document.getElementById('salary-month').options[month].text}</p>
-                <p><strong>Total Records:</strong> ${monthlyRecords.length}</p>
-                <p><strong>Total Time Balance:</strong> ${totalMinutes >= 0 ? '+' : ''}${totalMinutes} minutes</p>
-                <p><strong>Total Late Time:</strong> ${lateMinutes} minutes</p>
-                <p><strong>Hourly Rate:</strong> Ksh ${hourlyRate.toLocaleString()}</p>
-                <p><strong>Salary Deduction:</strong> Ksh ${deductionAmount.toFixed(2)}</p>
+                <p><strong>Month:</strong> ${monthName}</p>
+                <p><strong>Basic Salary:</strong> Ksh ${basicSalary.toLocaleString()} (${workingDays} days × Ksh ${dailyRate.toLocaleString()}/day)</p>
+                
+                <h4>Deductions:</h4>
             `;
             
-            if (totalMinutes > 0) {
-                resultHTML += `<p class="early"><i class="fas fa-thumbs-up"></i> ${staffName} has a positive time balance this month!</p>`;
-            } else if (totalMinutes < 0) {
-                resultHTML += `<p class="late"><i class="fas fa-thumbs-down"></i> ${staffName} has a negative time balance this month.</p>`;
+            if (deductions.length > 0) {
+                deductions.forEach(deduction => {
+                    resultHTML += `<p>• ${deduction.description || 'No description'}: Ksh ${deduction.amount.toLocaleString()}</p>`;
+                });
             } else {
-                resultHTML += `<p class="punctual"><i class="fas fa-check-circle"></i> ${staffName} was perfectly on time this month.</p>`;
+                resultHTML += `<p>No deductions applied</p>`;
             }
+            
+            resultHTML += `
+                <p><strong>Total Deductions:</strong> Ksh ${totalDeductions.toLocaleString()}</p>
+                <p><strong>Net Salary:</strong> Ksh ${netSalary.toLocaleString()}</p>
+                <p><strong>Payment Date:</strong> ${formattedPaymentDate}</p>
+                
+                <div style="margin-top: 20px;">
+                    <button id="save-salary" class="btn-success">
+                        <i class="fas fa-save"></i> Save Salary Record
+                    </button>
+                </div>
+            `;
             
             salaryResult.innerHTML = resultHTML;
             salaryResult.style.display = 'block';
+            
+            // Add event listener to save button
+            document.getElementById('save-salary').addEventListener('click', () => {
+                saveSalaryRecord(staffName, monthName, basicSalary, totalDeductions, netSalary, paymentDate, deductions);
+            });
+        }
+        
+        // Save salary record
+        function saveSalaryRecord(staffName, month, basicSalary, totalDeductions, netSalary, paymentDate, deductions) {
+            // Create record
+            const record = {
+                staffName,
+                month,
+                basicSalary,
+                totalDeductions,
+                netSalary,
+                paymentDate,
+                calculationDate: new Date().toLocaleDateString(),
+                deductions: deductions
+            };
+            
+            // Check if record for this staff and month already exists
+            const existingIndex = salaryRecords.findIndex(r => 
+                r.staffName === staffName && r.month === month
+            );
+            
+            if (existingIndex >= 0) {
+                salaryRecords[existingIndex] = record;
+            } else {
+                salaryRecords.push(record);
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('salaryRecords', JSON.stringify(salaryRecords));
+            
+            // Reload salary records
+            loadSalaryRecords();
+            
+            // Show success message
+            alert('Salary record saved successfully!');
+            
+            // Clear deductions for next calculation
+            deductionsContainer.innerHTML = '';
+            addDeductionField();
         }
 
         // Filter records by search term
@@ -1582,6 +2276,74 @@
             link.click();
             document.body.removeChild(link);
         }
+        
+        // Export salary records to CSV
+        function exportSalaryToCsv() {
+            if (salaryRecords.length === 0) {
+                alert('No salary records to export!');
+                return;
+            }
+            
+            // CSV header
+            let csv = 'Staff Name,Month,Basic Salary,Total Deductions,Net Salary,Payment Date,Calculation Date,Deductions\n';
+            
+            // Add records
+            salaryRecords.forEach(record => {
+                const deductionsStr = record.deductions.map(d => 
+                    `${d.description || 'No description'}: Ksh ${d.amount}`
+                ).join('; ');
+                
+                csv += `"${record.staffName}",` +
+                      `"${record.month}",` +
+                      `${record.basicSalary},` +
+                      `${record.totalDeductions},` +
+                      `${record.netSalary},` +
+                      `"${record.paymentDate}",` +
+                      `"${record.calculationDate}",` +
+                      `"${deductionsStr}"\n`;
+            });
+            
+            // Create download link
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `salary_records_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Export late records to CSV
+        function exportLateToCsv() {
+            if (lateRecords.length === 0) {
+                alert('No late records to export!');
+                return;
+            }
+            
+            // CSV header
+            let csv = 'Date,Staff Name,Arrival Time,Minutes Late,Deduction (Ksh)\n';
+            
+            // Add records
+            lateRecords.forEach(record => {
+                const deduction = calculateLateDeduction(record.duration);
+                csv += `"${record.date}",` +
+                      `"${record.staffName}",` +
+                      `"${record.arrivalTime}",` +
+                      `${record.duration},` +
+                      `${deduction.replace('Ksh ', '')}\n`;
+            });
+            
+            // Create download link
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `late_records_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 
         // Clear all business records
         function clearAllRecords() {
@@ -1608,14 +2370,35 @@
         function clearAllAttendanceRecords() {
             if (confirm('Are you sure you want to delete ALL attendance records? This cannot be undone.')) {
                 attendanceRecords = [];
-                staffList = [];
                 localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
-                localStorage.setItem('staffList', JSON.stringify(staffList));
                 
                 loadAttendanceRecords();
-                updateStaffDropdown();
                 
                 alert('All attendance records have been cleared.');
+            }
+        }
+        
+        // Clear all salary records
+        function clearAllSalaryRecords() {
+            if (confirm('Are you sure you want to delete ALL salary records? This cannot be undone.')) {
+                salaryRecords = [];
+                localStorage.setItem('salaryRecords', JSON.stringify(salaryRecords));
+                
+                loadSalaryRecords();
+                
+                alert('All salary records have been cleared.');
+            }
+        }
+        
+        // Clear all late records
+        function clearAllLateRecords() {
+            if (confirm('Are you sure you want to delete ALL late arrival records? This cannot be undone.')) {
+                lateRecords = [];
+                localStorage.setItem('lateRecords', JSON.stringify(lateRecords));
+                
+                loadLateRecords();
+                
+                alert('All late arrival records have been cleared.');
             }
         }
 
@@ -1734,6 +2517,9 @@
                             .late { color: #e74c3c; font-weight: bold; }
                             .early { color: #27ae60; font-weight: bold; }
                             .punctual { color: #3498db; font-weight: bold; }
+                            .success { color: #27ae60; font-weight: bold; }
+                            .warning { color: #f39c12; font-weight: bold; }
+                            .late-deduction { color: #e74c3c; font-weight: bold; }
                         </style>
                     </head>
                     <body>
@@ -1744,6 +2530,8 @@
                         <div class="summary">
                             <p><strong>Total Records:</strong> ${attendanceRecords.length}</p>
                             <p><strong>Unique Staff:</strong> ${[...new Set(attendanceRecords.map(r => r.staffName))].length}</p>
+                            <p><strong>Late Arrivals:</strong> ${attendanceRecords.filter(r => r.status === 'late').length}</p>
+                            <p><strong>Total Late Deductions:</strong> Ksh ${lateRecords.reduce((sum, record) => sum + Math.floor(record.duration / 15) * 50, 0).toLocaleString()}</p>
                         </div>
                         
                         <h2>Detailed Attendance</h2>
@@ -1767,6 +2555,64 @@
                                         <td>${record.duration}</td>
                                     </tr>
                                 `).join('')}
+                            </tbody>
+                        </table>
+                        
+                        <h2>Late Arrival Records</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Staff Name</th>
+                                    <th>Arrival Time</th>
+                                    <th>Minutes Late</th>
+                                    <th>Deduction (Ksh)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${lateRecords.map(record => `
+                                    <tr>
+                                        <td>${record.date}</td>
+                                        <td>${record.staffName}</td>
+                                        <td>${record.arrivalTime}</td>
+                                        <td>${record.duration}</td>
+                                        <td class="late-deduction">${calculateLateDeduction(record.duration)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                        
+                        <h2>Salary Records</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Staff Name</th>
+                                    <th>Month</th>
+                                    <th>Basic Salary</th>
+                                    <th>Deductions</th>
+                                    <th>Net Salary</th>
+                                    <th>Payment Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${salaryRecords.map(record => {
+                                    const status = new Date(record.paymentDate) <= new Date() ? 
+                                        `<span class="success">Paid on ${record.paymentDate}</span>` : 
+                                        `<span class="warning">Pending (due ${record.paymentDate})</span>`;
+                                    
+                                    return `
+                                        <tr>
+                                            <td>${record.staffName}</td>
+                                            <td>${record.month}</td>
+                                            <td>Ksh ${record.basicSalary.toLocaleString()}</td>
+                                            <td>Ksh ${record.totalDeductions.toLocaleString()}</td>
+                                            <td>Ksh ${record.netSalary.toLocaleString()}</td>
+                                            <td>${record.paymentDate}</td>
+                                            <td>${status}</td>
+                                        </tr>
+                                    `;
+                                }).join('')}
                             </tbody>
                         </table>
                         
