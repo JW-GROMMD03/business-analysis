@@ -715,6 +715,23 @@
                             <input type="text" id="employee-position" placeholder="Enter position" required>
                         </div>
                         <div class="input-group">
+                            <label for="employee-gender">Gender:</label>
+                            <select id="employee-gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="working-hours">Working Hours per Day:</label>
+                            <input type="number" id="working-hours" min="1" max="24" value="8" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="employee-email">Email:</label>
+                            <input type="email" id="employee-email" placeholder="Enter employee email">
+                        </div>
+                        <div class="input-group">
                             <label for="daily-rate">Daily Rate (Ksh):</label>
                             <input type="number" id="daily-rate" min="0" step="100" required>
                         </div>
@@ -1024,6 +1041,9 @@
         const employeeNameInput = document.getElementById('employee-name');
         const employeeIdInput = document.getElementById('employee-id');
         const employeePositionInput = document.getElementById('employee-position');
+        const employeeGenderInput = document.getElementById('employee-gender');
+        const workingHoursInput = document.getElementById('working-hours');
+        const employeeEmailInput = document.getElementById('employee-email');
         const dailyRateInput = document.getElementById('daily-rate');
         const paymentDaySelect = document.getElementById('payment-day');
         const registerEmployeeBtn = document.getElementById('register-employee');
@@ -1337,11 +1357,14 @@
             const name = employeeNameInput.value.trim();
             const id = employeeIdInput.value.trim();
             const position = employeePositionInput.value.trim();
+            const gender = employeeGenderInput.value;
+            const workingHours = parseFloat(workingHoursInput.value) || 8;
+            const email = employeeEmailInput.value.trim();
             const dailyRate = parseFloat(dailyRateInput.value) || 0;
             const paymentDay = paymentDaySelect.value;
             
-            if (!name || !id || !position || dailyRate <= 0) {
-                alert('Please fill all fields with valid values');
+            if (!name || !id || !position || !gender || dailyRate <= 0) {
+                alert('Please fill all required fields with valid values');
                 return;
             }
             
@@ -1356,6 +1379,9 @@
                 id,
                 name,
                 position,
+                gender,
+                workingHours,
+                email,
                 dailyRate,
                 paymentDay,
                 registrationDate: new Date().toLocaleDateString()
@@ -1371,6 +1397,9 @@
             employeeNameInput.value = '';
             employeeIdInput.value = '';
             employeePositionInput.value = '';
+            employeeGenderInput.value = '';
+            workingHoursInput.value = '8';
+            employeeEmailInput.value = '';
             dailyRateInput.value = '';
             paymentDaySelect.value = '1';
             
@@ -1456,6 +1485,9 @@
                 empCard.innerHTML = `
                     <h3>${emp.name} (${emp.id})</h3>
                     <p><strong>Position:</strong> ${emp.position}</p>
+                    <p><strong>Gender:</strong> ${emp.gender}</p>
+                    <p><strong>Working Hours/Day:</strong> ${emp.workingHours}</p>
+                    ${emp.email ? `<p><strong>Email:</strong> ${emp.email}</p>` : ''}
                     <p><strong>Daily Rate:</strong> Ksh ${emp.dailyRate.toLocaleString()}</p>
                     <p><strong>Payment Day:</strong> ${getPaymentDayDescription(emp.paymentDay)}</p>
                     <p><strong>Registered on:</strong> ${emp.registrationDate}</p>
@@ -2010,7 +2042,7 @@
                 }
             }
             
-            // Find employee to get daily rate
+            // Find employee to get daily rate and working hours
             const employee = employees.find(emp => emp.name === staffName);
             if (!employee) {
                 alert('Employee not found in records');
@@ -2018,32 +2050,38 @@
             }
             
             const dailyRate = employee.dailyRate;
+            const workingHoursPerDay = employee.workingHours || 8;
             
             // Calculate basic salary
             const basicSalary = dailyRate * workingDays;
             
-            // Get late arrival deductions for this staff member
+            // Get late arrival records for this staff member in the selected month
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const monthName = monthNames[month];
             
             // Find late records for this staff member in the selected month
-            const lateDeductions = lateRecords.filter(record => {
+            const lateRecordsForMonth = lateRecords.filter(record => {
                 const recordDate = new Date(record.date);
                 return record.staffName === staffName && 
                        recordDate.getMonth() === month &&
                        record.status === 'late';
             });
             
-            // Calculate total late deductions (50 Ksh per 15 minutes late)
-            const totalLateDeduction = lateDeductions.reduce((sum, record) => {
-                return sum + Math.floor(record.duration / 15) * 50;
-            }, 0);
+            // Calculate total late minutes for the month
+            const totalLateMinutes = lateRecordsForMonth.reduce((sum, record) => sum + record.duration, 0);
             
-            // Add late deduction to other deductions
-            if (totalLateDeduction > 0) {
+            // Calculate the minute rate (daily rate divided by working hours per day, then divided by 60)
+            const hourlyRate = dailyRate / workingHoursPerDay;
+            const minuteRate = hourlyRate / 60;
+            
+            // Calculate total late deduction
+            const totalLateDeduction = totalLateMinutes * minuteRate;
+            
+            // Add late deduction to other deductions if there are any late minutes
+            if (totalLateMinutes > 0) {
                 deductions.push({
-                    description: `Late arrivals (${lateDeductions.length} times)`,
-                    amount: totalLateDeduction
+                    description: `Late arrivals (${lateRecordsForMonth.length} times, ${totalLateMinutes} total minutes)`,
+                    amount: Math.round(totalLateDeduction)
                 });
             }
             
@@ -2061,16 +2099,26 @@
                 <h3>Salary Calculation for ${staffName}</h3>
                 <p><strong>Month:</strong> ${monthName}</p>
                 <p><strong>Basic Salary:</strong> Ksh ${basicSalary.toLocaleString()} (${workingDays} days × Ksh ${dailyRate.toLocaleString()}/day)</p>
+                <p><strong>Working Hours/Day:</strong> ${workingHoursPerDay}</p>
                 
-                <h4>Deductions:</h4>
+                <h4>Late Arrival Deductions:</h4>
+                ${totalLateMinutes > 0 ? `
+                    <p>• Total Late Minutes: ${totalLateMinutes} minutes</p>
+                    <p>• Minute Rate: Ksh ${minuteRate.toFixed(2)} (Daily rate ÷ ${workingHoursPerDay} hours ÷ 60 minutes)</p>
+                    <p>• Late Deduction: ${totalLateMinutes} mins × Ksh ${minuteRate.toFixed(2)} = Ksh ${Math.round(totalLateDeduction).toLocaleString()}</p>
+                ` : '<p>No late arrivals this month</p>'}
+                
+                <h4>Other Deductions:</h4>
             `;
             
-            if (deductions.length > 0) {
+            if (deductions.length > (totalLateMinutes > 0 ? 1 : 0)) {
                 deductions.forEach(deduction => {
-                    resultHTML += `<p>• ${deduction.description || 'No description'}: Ksh ${deduction.amount.toLocaleString()}</p>`;
+                    if (deduction.description !== `Late arrivals (${lateRecordsForMonth.length} times, ${totalLateMinutes} total minutes)`) {
+                        resultHTML += `<p>• ${deduction.description || 'No description'}: Ksh ${deduction.amount.toLocaleString()}</p>`;
+                    }
                 });
             } else {
-                resultHTML += `<p>No deductions applied</p>`;
+                resultHTML += `<p>No other deductions applied</p>`;
             }
             
             resultHTML += `
